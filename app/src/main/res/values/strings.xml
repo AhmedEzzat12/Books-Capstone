@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Capstone Project</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="books_app">Books App</string>
+    <string name="udacity_capstone">Udacity Capstone</string>
+    <string name="mylibrary">MyLibrary</string>
+    <string name="profile">Logout</string>
+    <string name="book_shelves">Book shelves</string>
+    <string name="books">Books</string>
+    <string name="login">Login</string>
+    <string name="there_are_no_books_to_display_please_search_about_a_book">there are no books to display\nplease search about a book!</string>
+</resources>

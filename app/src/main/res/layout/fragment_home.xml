@@ -1,0 +1,21 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ntl.udacity.capstoneproject.home.HomeFragment">
+
+    <com.ntl.udacity.capstoneproject.home.plus.RecyclerViewWithEmpty
+        android:id="@+id/recylcerview_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.ntl.udacity.capstoneproject.home.plus.RecyclerViewWithEmpty>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/there_are_no_books_to_display_please_search_about_a_book"
+        android:visibility="visible"
+        android:id="@+id/textview_home_emptyview"/>
+</FrameLayout>
