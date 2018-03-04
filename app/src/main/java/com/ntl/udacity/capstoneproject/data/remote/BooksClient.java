@@ -2,7 +2,6 @@ package com.ntl.udacity.capstoneproject.data.remote;
 
 import android.content.Context;
 
-import com.ntl.udacity.capstoneproject.data.BooksRepository;
 import com.ntl.udacity.capstoneproject.data.local.SharedPrefHelper;
 
 import okhttp3.OkHttpClient;
@@ -23,6 +22,7 @@ public class BooksClient
             okHttpClient.addInterceptor(new BooksInterceptor(SharedPrefHelper
                     .getInstance(context)
                     .getSharedPreferenceAccesstoken()));
+            okHttpClient.authenticator(new BooksAuthinticator(context));
 
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)

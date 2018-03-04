@@ -6,7 +6,8 @@ import android.os.Parcelable;
 
 public class BookItem implements Parcelable
 {
-    public static final Creator<BookItem> CREATOR = new Creator<BookItem>()
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<BookItem> CREATOR = new Parcelable.Creator<BookItem>()
     {
         @Override
         public BookItem createFromParcel(Parcel in)
@@ -30,22 +31,7 @@ public class BookItem implements Parcelable
         kind = in.readString();
         id = in.readString();
         selfLink = in.readString();
-        volumeInfo = in.readParcelable(VolumeInfo.class.getClassLoader());
-    }
-
-    @Override
-    public int describeContents()
-    {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags)
-    {
-        dest.writeString(kind);
-        dest.writeString(id);
-        dest.writeString(selfLink);
-        volumeInfo.writeToParcel(dest, 0);
+        volumeInfo = (VolumeInfo) in.readValue(VolumeInfo.class.getClassLoader());
     }
 
     public String getKind()
@@ -68,4 +54,18 @@ public class BookItem implements Parcelable
         return volumeInfo;
     }
 
+    @Override
+    public int describeContents()
+    {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags)
+    {
+        dest.writeString(kind);
+        dest.writeString(id);
+        dest.writeString(selfLink);
+        dest.writeValue(volumeInfo);
+    }
 }

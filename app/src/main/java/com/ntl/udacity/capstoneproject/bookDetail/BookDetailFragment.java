@@ -1,33 +1,153 @@
 package com.ntl.udacity.capstoneproject.bookDetail;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
+import com.google.common.base.MoreObjects;
 import com.ntl.udacity.capstoneproject.R;
+import com.ntl.udacity.capstoneproject.data.model.BookItem;
+import com.squareup.picasso.Picasso;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class BookDetailFragment extends Fragment
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import timber.log.Timber;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
+public class BookDetailFragment extends Fragment implements BookDetailContract.View
 {
+    @BindView(R.id.textView_bookDetail_title)
+    TextView title_tv;
+    @BindView(R.id.textView_bookDetail_author)
+    TextView author_tv;
+    @BindView(R.id.textView_bookDetail_descriptionHolder)
+    TextView description_tv;
+    @BindView(R.id.textView_bookDetail_publisher)
+    TextView publisher_tv;
+    @BindView(R.id.textView_bookDetail_publishDate)
+    TextView publishDate_tv;
+    @BindView(R.id.button_bookDetail_add)
+    TextView addToShelf_btn;
+    @BindView(R.id.button_bookDetail_openPage)
+    TextView openBookPage_btn;
+    @BindView(R.id.imageView_bookDetail)
+    ImageView bookThumbnail_iv;
 
+    @BindView(R.id.ratingBar)
+    RatingBar ratingBar;
 
-    public BookDetailFragment()
+    private BookItem mBookItem;
+    private BookDetailContract.Presenter mBookDetailPresenter;
+    private Unbinder unbinder;
+
+    public static BookDetailFragment getInstance(BookItem bookItem)
     {
-        // Required empty public constructor
+        BookDetailFragment bookDetailFragment = new BookDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(BookDetailActivity.BOOK, bookItem);
+        bookDetailFragment.setArguments(bundle);
+        return bookDetailFragment;
     }
-
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
+    public void onCreate(@Nullable Bundle savedInstanceState)
     {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_book_detail, container, false);
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+        Bundle bundle = getArguments();
+        if (bundle != null)
+        {
+            this.mBookItem = bundle.getParcelable(BookDetailActivity.BOOK);
+        }
+
     }
 
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState)
+    {
+        View view = inflater.inflate(R.layout.fragment_book_detail, container, false);
+        unbinder = ButterKnife.bind(this, view);
+
+        return view;
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        unbinder.unbind();
+    }
+
+    @Override
+    public void setPresenter(BookDetailContract.Presenter presenter)
+    {
+        this.mBookDetailPresenter = presenter;
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        mBookDetailPresenter.start();
+    }
+
+    @Override
+    public void showBookDetail()
+    {
+
+        if (mBookItem.getVolumeInfo().getAuthors() != null)
+        {
+            author_tv.setText(MoreObjects.firstNonNull(mBookItem.getVolumeInfo().getAuthors().get(0), ""));
+        } else
+        {
+            author_tv.setText("");
+        }
+
+
+        title_tv.setText(MoreObjects.firstNonNull(mBookItem.getVolumeInfo().getTitle(), ""));
+        title_tv.setText(MoreObjects.firstNonNull(mBookItem.getVolumeInfo().getTitle(), ""));
+        description_tv.setText(MoreObjects.firstNonNull(mBookItem.getVolumeInfo().getDescription(), ""));
+        publishDate_tv.setText(MoreObjects.firstNonNull(mBookItem.getVolumeInfo().getPublishedDate(), ""));
+        publisher_tv.setText(MoreObjects.firstNonNull(mBookItem.getVolumeInfo().getPublisher(), ""));
+        ratingBar.setRating(Float.parseFloat(MoreObjects.firstNonNull(mBookItem.getVolumeInfo().getAverageRating(), "0")));
+        try
+        {
+            Picasso.with(getActivity()).load(checkNotNull(mBookItem.getVolumeInfo().getImageLinks().getThumbnail())).into(bookThumbnail_iv);
+        } catch (NullPointerException e)
+        {
+            Timber.e(e);
+            //TODO thumbnail not available
+        }
+    }
+
+
+    @OnClick(R.id.button_bookDetail_add)
+    public void chooseBookshelf()
+    {
+        ChooseBookshelfDialog chooseBookshelfFragment = ChooseBookshelfDialog.getInstance(mBookItem);
+        chooseBookshelfFragment.setCancelable(false);
+        chooseBookshelfFragment.show(getActivity().getSupportFragmentManager(), "add_to_bookshelf");
+    }
+
+    @OnClick(R.id.button_bookDetail_openPage)
+    public void openBookPage()
+    {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mBookItem.getVolumeInfo().getInfoLink()));
+        getActivity().startActivity(intent);
+    }
 }
+

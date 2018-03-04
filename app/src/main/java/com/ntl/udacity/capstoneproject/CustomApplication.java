@@ -1,6 +1,8 @@
 package com.ntl.udacity.capstoneproject;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import timber.log.Timber;
 
@@ -21,6 +23,14 @@ public class CustomApplication extends Application
             //TODO handle release Build
             //Timber.plant(new CrashReportingTree());
         }
+
+    }
+
+    @Override
+    protected void attachBaseContext(Context base)
+    {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
 
     }
 }

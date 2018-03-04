@@ -3,19 +3,19 @@ package com.ntl.udacity.capstoneproject.home;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ntl.udacity.capstoneproject.R;
+import com.ntl.udacity.capstoneproject.bookDetail.BookDetailActivity;
 import com.ntl.udacity.capstoneproject.data.model.BookItem;
 import com.ntl.udacity.capstoneproject.home.plus.HomeAdapter;
 import com.ntl.udacity.capstoneproject.home.plus.RecyclerViewWithEmpty;
@@ -25,6 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import timber.log.Timber;
 
 public class HomeFragment extends Fragment implements HomeContract.View
 {
@@ -48,6 +49,8 @@ public class HomeFragment extends Fragment implements HomeContract.View
     {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        setRetainInstance(true);
+        Timber.d("ondCreate has been called");
     }
 
     @Override
@@ -61,6 +64,7 @@ public class HomeFragment extends Fragment implements HomeContract.View
         mHomeAdapter = new HomeAdapter(mBookItemList, context);
         mRecyclerView.setAdapter(mHomeAdapter);
         mRecyclerView.setEmptyView(mEmptyView);
+        mHomeAdapter.setHandleClick(this);
         return v;
     }
 
@@ -69,6 +73,7 @@ public class HomeFragment extends Fragment implements HomeContract.View
     {
         super.onDestroy();
         unbinder.unbind();
+        Timber.d("onDestroy has been called");
     }
 
     @Override
@@ -78,24 +83,7 @@ public class HomeFragment extends Fragment implements HomeContract.View
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case R.id.my_library:
 
-                Toast.makeText(getActivity(), "my_library touched", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.logout:
-                Toast.makeText(getActivity(), "my_library touched", Toast.LENGTH_SHORT).show();
-                return true;
-
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void booksAreReady(List<BookItem> bookItemList)
@@ -113,9 +101,18 @@ public class HomeFragment extends Fragment implements HomeContract.View
         builder.show();
     }
 
+    @Override
+    public void onBookClick(int adapterPosition)
+    {
+        Intent intent = new Intent(getActivity(), BookDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(BookDetailActivity.BOOK, mBookItemList.get(adapterPosition));
+        intent.putExtra(BookDetailActivity.BOOK_BUNDLE, bundle);
+        getActivity().startActivity(intent);
+    }
+
     public void getBooks(String query)
     {
-
         mHomePresenter.getBooks(query);
     }
 }

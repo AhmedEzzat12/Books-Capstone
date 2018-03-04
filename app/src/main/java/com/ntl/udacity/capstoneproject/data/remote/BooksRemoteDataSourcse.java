@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.ntl.udacity.capstoneproject.data.BooksDataSource;
 import com.ntl.udacity.capstoneproject.data.model.AccessToken;
+import com.ntl.udacity.capstoneproject.data.model.BookShelfResponse;
 import com.ntl.udacity.capstoneproject.data.model.SearchResponse;
 
 import retrofit2.Call;
@@ -18,11 +19,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class BooksRemoteDataSourcse implements BooksDataSource
 {
     private static BooksRemoteDataSourcse INSTANCE;
-    private Context context;
+    private BooksInterface mBooksInterface;
 
     public BooksRemoteDataSourcse(Context context)
     {
-        this.context = context;
+        mBooksInterface = BooksClient.getClient(context);
     }
 
     public static BooksRemoteDataSourcse getInstance(Context context)
@@ -36,10 +37,9 @@ public class BooksRemoteDataSourcse implements BooksDataSource
 
 
     @Override
-    public void getAccesstoken(final getAccesstokenCallback callback, String code, String clientId, String redirectUri, String grantType)
+    public void getAccesstoken(final GetAccesstokenCallback callback, String code, String clientId, String redirectUri, String grantType)
     {
-        BooksInterface booksInterface = BooksClient.getClient(context);
-        Call<AccessToken> requestAccessToken = booksInterface.requestAccessToken(code, clientId, redirectUri, grantType);
+        Call<AccessToken> requestAccessToken = mBooksInterface.requestAccessToken(code, clientId, redirectUri, grantType);
         requestAccessToken.enqueue(new Callback<AccessToken>()
         {
             @Override
@@ -67,10 +67,9 @@ public class BooksRemoteDataSourcse implements BooksDataSource
     }
 
     @Override
-    public void searchSpecificBook(final getSearchBookCallback callback, String query)
+    public void searchSpecificBook(final GetSearchBookCallback callback, String query)
     {
-        BooksInterface booksInterface = BooksClient.getClient(context);
-        Call<SearchResponse> requestBooks = booksInterface.searchVolumes(query);
+        Call<SearchResponse> requestBooks = mBooksInterface.searchVolumes(query);
         requestBooks.enqueue(new Callback<SearchResponse>()
         {
             @Override
@@ -92,6 +91,31 @@ public class BooksRemoteDataSourcse implements BooksDataSource
 
             @Override
             public void onFailure(@NonNull Call<SearchResponse> call, @NonNull Throwable t)
+            {
+                Timber.e(t);
+                callback.onThereIsError();
+            }
+        });
+    }
+
+    @Override
+    public void getUserbookshelves(final UserBookshelvesCallback callback)
+    {
+        //TODO handle Offline aka Contentprovider
+        Call<BookShelfResponse> bookShelfResponseCall = mBooksInterface.getUserBookshelves();
+        bookShelfResponseCall.enqueue(new Callback<BookShelfResponse>()
+        {
+            @Override
+            public void onResponse(@NonNull Call<BookShelfResponse> call, @NonNull Response<BookShelfResponse> response)
+            {
+                if (response.body() != null)
+                {
+                    callback.onBookshelvesLoaded(response.body().getItems());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<BookShelfResponse> call, @NonNull Throwable t)
             {
                 Timber.e(t);
                 callback.onThereIsError();

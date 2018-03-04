@@ -4,8 +4,6 @@ import android.support.annotation.NonNull;
 
 import com.ntl.udacity.capstoneproject.data.local.SharedPrefHelper;
 
-import timber.log.Timber;
-
 import static com.google.common.base.Preconditions.checkNotNull;
 
 
@@ -39,14 +37,21 @@ public class BooksRepository implements BooksDataSource
     }
 
     @Override
-    public void getAccesstoken(getAccesstokenCallback callback, String code, String clientId, String redirectUri, String grantType)
+    public void getAccesstoken(GetAccesstokenCallback callback, String code, String clientId, String redirectUri, String grantType)
     {
         mBooksDataSource.getAccesstoken(callback,code,clientId,redirectUri,grantType);
     }
 
     @Override
-    public void searchSpecificBook(getSearchBookCallback callback, String query)
+    public void searchSpecificBook(GetSearchBookCallback callback, String query)
     {
         mBooksDataSource.searchSpecificBook(callback,query);
     }
+
+    @Override
+    public void getUserbookshelves(UserBookshelvesCallback callback)
+    {
+        mBooksDataSource.getUserbookshelves(callback);
+    }
+
 }

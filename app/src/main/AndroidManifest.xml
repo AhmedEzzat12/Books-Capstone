@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ntl.udacity.capstoneproject">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -18,19 +19,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".home.HomeActivity"
-            />
-        <activity android:name=".login.LoginActivity" >
+        <activity android:name=".home.HomeActivity" />
+        <activity android:name=".login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:scheme="com.ntl.udacity.capstoneproject" />
             </intent-filter>
         </activity>
         <activity android:name=".bookDetail.BookDetailActivity" />
-        <activity android:name=".bookshelfDetail.BookshelfDetailActivity" />
-        <activity android:name=".myLibrary.MyLibraryActivity"></activity>
+        <activity
+            android:name=".bookshelfDetail.BookshelfDetailActivity"
+            android:parentActivityName=".home.HomeActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".home.HomeActivity" />
+        </activity>
+        <activity android:name=".myLibrary.MyLibraryActivity" />
     </application>
 
 </manifest>

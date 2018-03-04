@@ -12,10 +12,10 @@
     </com.ntl.udacity.capstoneproject.home.plus.RecyclerViewWithEmpty>
 
     <TextView
+        android:id="@+id/textview_home_emptyview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/there_are_no_books_to_display_please_search_about_a_book"
-        android:visibility="visible"
-        android:id="@+id/textview_home_emptyview"/>
+        android:visibility="gone" />
 </FrameLayout>

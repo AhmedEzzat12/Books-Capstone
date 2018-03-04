@@ -14,6 +14,9 @@ public interface HomeContract
         void booksAreReady(List<BookItem> bookItemList);
 
         void cantLoadBooks();
+
+        void onBookClick(int adapterPosition);
+
     }
 
     interface Presenter extends BasePresenter

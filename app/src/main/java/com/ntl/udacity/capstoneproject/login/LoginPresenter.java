@@ -4,8 +4,6 @@ package com.ntl.udacity.capstoneproject.login;
 import com.ntl.udacity.capstoneproject.data.BooksDataSource;
 import com.ntl.udacity.capstoneproject.data.BooksRepository;
 
-import timber.log.Timber;
-
 public class LoginPresenter implements LoginContract.Presenter
 {
     private final LoginContract.View mLoginView;
@@ -27,7 +25,7 @@ public class LoginPresenter implements LoginContract.Presenter
     @Override
     public void getTokenFromUrl(String code, String clientId, String redirectUri, String grantType)
     {
-        mBooksRepository.getAccesstoken(new BooksDataSource.getAccesstokenCallback()
+        mBooksRepository.getAccesstoken(new BooksDataSource.GetAccesstokenCallback()
         {
             @Override
             public void onTokenLoaded(String acesstoken, String refreshAccesstoken)

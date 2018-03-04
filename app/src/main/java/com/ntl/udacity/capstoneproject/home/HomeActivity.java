@@ -1,17 +1,22 @@
 package com.ntl.udacity.capstoneproject.home;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.ntl.udacity.capstoneproject.R;
 import com.ntl.udacity.capstoneproject.home.plus.EditorActionOnClick;
 import com.ntl.udacity.capstoneproject.home.plus.OnEditorActionListenerDone;
+import com.ntl.udacity.capstoneproject.myLibrary.MyLibraryActivity;
 import com.ntl.udacity.capstoneproject.util.Inject;
+
+import static com.ntl.udacity.capstoneproject.util.ActivityUtils.addFragmentToActivity;
+import static com.ntl.udacity.capstoneproject.util.ActivityUtils.showFragment;
 
 public class HomeActivity extends AppCompatActivity implements EditorActionOnClick
 {
@@ -34,19 +39,15 @@ public class HomeActivity extends AppCompatActivity implements EditorActionOnCli
         {
             fragment = HomeFragment.getInstance();
             addFragmentToActivity(fragmentManager, fragment, contentID);
+        } else
+        {
+            showFragment(fragmentManager, fragment);
         }
-        fragmentManager.beginTransaction().show(fragment).commit();
+
         new HomePresenter(fragment, Inject.provideBooksRepository(this));
+
     }
 
-    private void addFragmentToActivity(FragmentManager fragmentManager, Fragment fragment, int contentFrame)
-    {
-
-        fragmentManager
-                .beginTransaction()
-                .add(contentFrame, fragment)
-                .commit();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -55,10 +56,27 @@ public class HomeActivity extends AppCompatActivity implements EditorActionOnCli
         return true;
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.my_library:
+                Intent intent = new Intent(HomeActivity.this, MyLibraryActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.logout:
+                //TODO handle logout
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
     @Override
     public void getBooks(String query)
     {
         search.clearFocus();
-        ((HomeFragment) fragment).getBooks(query);
+        fragment.getBooks(query);
     }
 }

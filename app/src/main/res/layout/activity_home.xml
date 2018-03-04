@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     tools:context="com.ntl.udacity.capstoneproject.home.HomeActivity">
 
@@ -18,16 +20,16 @@
             android:theme="@style/Toolbar">
 
             <EditText
+                android:id="@+id/edittext_home_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:drawableStart="@android:drawable/ic_menu_search"
                 android:hint="Search books"
-                android:textColor="#fff"
-                android:textColorHint="#d1d1d1"
                 android:imeOptions="actionDone"
-                android:id="@+id/edittext_home_search"
                 android:inputType="text"
                 android:lines="1"
+                android:textColor="#fff"
+                android:textColorHint="#d1d1d1"
 
                 />
 

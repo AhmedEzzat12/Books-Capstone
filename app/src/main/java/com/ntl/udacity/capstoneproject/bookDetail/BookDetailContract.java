@@ -9,6 +9,7 @@ public interface BookDetailContract
     interface View extends BaseView<Presenter>
     {
 
+        void showBookDetail();
     }
 
     interface Presenter extends BasePresenter

@@ -28,7 +28,7 @@ public class HomePresenter implements HomeContract.Presenter
     @Override
     public void getBooks(String query)
     {
-        mBooksRepository.searchSpecificBook(new BooksDataSource.getSearchBookCallback()
+        mBooksRepository.searchSpecificBook(new BooksDataSource.GetSearchBookCallback()
         {
             @Override
             public void onBooksListLoaded(List<BookItem> bookItemsList)

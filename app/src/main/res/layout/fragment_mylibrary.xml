@@ -14,8 +14,23 @@
         android:text="@string/book_shelves"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
-    <android.support.v7.widget.RecyclerView
+    <com.ntl.udacity.capstoneproject.home.plus.RecyclerViewWithEmpty
+        android:id="@+id/recylcerview_mylibrary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:clipToPadding="false" />
+
+    <ProgressBar
+        android:id="@+id/progressbar_mylibrary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/textview_mylibrary_emptyview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="there are no bookshelves in your library yet"
+        android:visibility="gone" />
 </LinearLayout>

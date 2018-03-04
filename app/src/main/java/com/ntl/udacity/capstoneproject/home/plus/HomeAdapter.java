@@ -1,7 +1,6 @@
 package com.ntl.udacity.capstoneproject.home.plus;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.ntl.udacity.capstoneproject.R;
-import com.ntl.udacity.capstoneproject.bookDetail.BookDetailActivity;
 import com.ntl.udacity.capstoneproject.data.model.BookItem;
+import com.ntl.udacity.capstoneproject.home.HomeFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -24,6 +23,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>
 {
     private List<BookItem> mBookItemList;
     private Context mContext;
+    private HomeFragment mHomeFragment;
 
     public HomeAdapter(List<BookItem> bookItemList, Context context)
     {
@@ -34,7 +34,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_booke_search, parent, false));
+        return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_book_search, parent, false));
     }
 
     @Override
@@ -70,6 +70,11 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>
         notifyDataSetChanged();
     }
 
+    public void setHandleClick(HomeFragment homeFragment)
+    {
+        this.mHomeFragment = homeFragment;
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
@@ -86,9 +91,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder>
         @Override
         public void onClick(View v)
         {
-            Intent intent=new Intent(mContext, BookDetailActivity.class);
-            intent.putExtra("book",mBookItemList.get(getAdapterPosition()));
-            mContext.startActivity(intent);
+            mHomeFragment.onBookClick(getAdapterPosition());
+
         }
     }
 }
