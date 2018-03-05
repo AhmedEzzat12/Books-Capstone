@@ -11,4 +11,8 @@
     <string name="books">Books</string>
     <string name="login">Login</string>
     <string name="there_are_no_books_to_display_please_search_about_a_book">there are no books to display\nplease search about a book!</string>
+    <string name="clear_all">clear all</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="empty_view_text">you havent favourite any books yet</string>
 </resources>

@@ -4,11 +4,10 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
-import timber.log.Timber;
+import com.crashlytics.android.Crashlytics;
 
-/**
- * Created by ahmed on 2/26/2018.
- */
+import io.fabric.sdk.android.Fabric;
+import timber.log.Timber;
 
 public class CustomApplication extends Application
 {
@@ -16,14 +15,12 @@ public class CustomApplication extends Application
     public void onCreate()
     {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
 
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG)
+        {
             Timber.plant(new Timber.DebugTree());
-        } else {
-            //TODO handle release Build
-            //Timber.plant(new CrashReportingTree());
         }
-
     }
 
     @Override

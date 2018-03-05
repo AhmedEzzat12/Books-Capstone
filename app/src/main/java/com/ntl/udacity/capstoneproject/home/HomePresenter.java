@@ -37,7 +37,7 @@ public class HomePresenter implements HomeContract.Presenter
             }
 
             @Override
-            public void onThereIsError()
+            public void onThereIsError(Throwable t)
             {
                 mHomeView.cantLoadBooks();
             }

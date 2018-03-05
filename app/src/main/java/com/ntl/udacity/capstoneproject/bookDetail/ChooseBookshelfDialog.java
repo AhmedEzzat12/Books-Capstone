@@ -13,14 +13,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.ntl.udacity.capstoneproject.R;
 import com.ntl.udacity.capstoneproject.data.model.BookItem;
 import com.ntl.udacity.capstoneproject.data.model.BookShelfItem;
 import com.ntl.udacity.capstoneproject.data.model.BookShelfResponse;
-import com.ntl.udacity.capstoneproject.data.remote.AddVolumeToBookshelfResponse;
 import com.ntl.udacity.capstoneproject.data.remote.BooksClient;
 import com.ntl.udacity.capstoneproject.data.remote.BooksInterface;
+import com.ntl.udacity.capstoneproject.data.remote.EmptyResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -163,24 +164,28 @@ public class ChooseBookshelfDialog extends DialogFragment
     public void addToBookshelf()
     {
         isLoading(true);
-        Call<AddVolumeToBookshelfResponse> addVolRequest = mBooksInterface.addVolumeToBookshelf(bookShelfItem.getId()
+        Call<EmptyResponse> addVolRequest = mBooksInterface.addVolumeToBookshelf(bookShelfItem.getId()
                 , mBookItem.getId());
-        addVolRequest.enqueue(new Callback<AddVolumeToBookshelfResponse>()
+        addVolRequest.enqueue(new Callback<EmptyResponse>()
         {
             @Override
-            public void onResponse(Call<AddVolumeToBookshelfResponse> call, Response<AddVolumeToBookshelfResponse> response)
+            public void onResponse(Call<EmptyResponse> call, Response<EmptyResponse> response)
             {
                 isLoading(false);
                 if (response.code() == 204)
                 {
-
                     Timber.d(response.message());
+                    Toast.makeText(getContext(), "book has been added successfully ", Toast.LENGTH_SHORT).show();
+                    dismiss();
+                } else if (response.code() == 403)
+                {
+                    Toast.makeText(getContext(), "can't add book to this bookshelf", Toast.LENGTH_SHORT).show();
                     dismiss();
                 }
             }
 
             @Override
-            public void onFailure(Call<AddVolumeToBookshelfResponse> call, Throwable t)
+            public void onFailure(Call<EmptyResponse> call, Throwable t)
             {
                 isLoading(false);
                 Timber.e(t);

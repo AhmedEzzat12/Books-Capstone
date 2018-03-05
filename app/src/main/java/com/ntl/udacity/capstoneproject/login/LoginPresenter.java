@@ -35,7 +35,7 @@ public class LoginPresenter implements LoginContract.Presenter
             }
 
             @Override
-            public void onThereIsError()
+            public void onThereIsError(Throwable t)
             {
                 //handle view here
                 mLoginView.showFailedAuthentication();

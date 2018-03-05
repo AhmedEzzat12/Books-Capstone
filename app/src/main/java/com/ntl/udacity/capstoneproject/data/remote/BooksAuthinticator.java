@@ -23,7 +23,6 @@ import static com.ntl.udacity.capstoneproject.util.ClientInfo.GRANT_TYPE_AUTHORI
 public class BooksAuthinticator implements Authenticator
 {
     private Context mContext;
-    private SharedPrefHelper sharedPrefHelper;
 
     public BooksAuthinticator(Context mContext)
     {
@@ -39,7 +38,6 @@ public class BooksAuthinticator implements Authenticator
             return null; // Give up, we've already attempted to authenticate.
         }
 
-        sharedPrefHelper = new SharedPrefHelper(mContext);
         String refreshAccesstoken = SharedPrefHelper.getInstance(mContext).getSharedPreferenceRefreshAccesstoken();
 
         Timber.d("Authenticating for response: %s", response);

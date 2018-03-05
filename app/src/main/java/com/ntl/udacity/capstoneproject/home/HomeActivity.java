@@ -10,41 +10,68 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.ntl.udacity.capstoneproject.R;
+import com.ntl.udacity.capstoneproject.bookDetail.BookDetailFragment;
+import com.ntl.udacity.capstoneproject.bookDetail.BookDetailPresenter;
+import com.ntl.udacity.capstoneproject.data.model.BookItem;
 import com.ntl.udacity.capstoneproject.home.plus.EditorActionOnClick;
 import com.ntl.udacity.capstoneproject.home.plus.OnEditorActionListenerDone;
 import com.ntl.udacity.capstoneproject.myLibrary.MyLibraryActivity;
 import com.ntl.udacity.capstoneproject.util.Inject;
+import com.ntl.udacity.capstoneproject.util.Utility;
 
 import static com.ntl.udacity.capstoneproject.util.ActivityUtils.addFragmentToActivity;
 import static com.ntl.udacity.capstoneproject.util.ActivityUtils.showFragment;
 
-public class HomeActivity extends AppCompatActivity implements EditorActionOnClick
+public class HomeActivity extends AppCompatActivity implements EditorActionOnClick, OnBookIsSelected
 {
+    public static final String TWOPANE = "two_pane";
     private EditText search;
-    private HomeFragment fragment;
+    private HomeFragment mHomefragment;
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        boolean twoPane = findViewById(R.id.master_container) != null;
+
         Toolbar toolbar = findViewById(R.id.home_toolbar);
         setSupportActionBar(toolbar);
         search = toolbar.findViewById(R.id.edittext_home_search);
         search.setOnEditorActionListener(new OnEditorActionListenerDone(this));
-        int contentID = R.id.contentFrame;
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragment = (HomeFragment) fragmentManager.findFragmentById(contentID);
-        if (fragment == null)
+        fragmentManager = getSupportFragmentManager();
+
+        if (twoPane)
         {
-            fragment = HomeFragment.getInstance();
-            addFragmentToActivity(fragmentManager, fragment, contentID);
+            int masterId = R.id.master_container;
+            mHomefragment = (HomeFragment) fragmentManager.findFragmentById(masterId);
+            if (mHomefragment == null)
+            {
+                mHomefragment = HomeFragment.getInstance(twoPane);
+                mHomefragment.setmOnBookIsSelected(this);
+                addFragmentToActivity(fragmentManager, mHomefragment, masterId);
+            } else
+            {
+                showFragment(fragmentManager, mHomefragment);
+            }
+
         } else
         {
-            showFragment(fragmentManager, fragment);
-        }
+            int contentID = R.id.contentFrame;
+            mHomefragment = (HomeFragment) fragmentManager.findFragmentById(contentID);
+            if (mHomefragment == null)
+            {
+                mHomefragment = HomeFragment.getInstance(twoPane);
+                addFragmentToActivity(fragmentManager, mHomefragment, contentID);
+            } else
+            {
+                showFragment(fragmentManager, mHomefragment);
+            }
 
-        new HomePresenter(fragment, Inject.provideBooksRepository(this));
+            Utility.scheduleChargingReminder(this);
+        }
+        new HomePresenter(mHomefragment, Inject.provideBooksRepository(this));
 
     }
 
@@ -77,6 +104,15 @@ public class HomeActivity extends AppCompatActivity implements EditorActionOnCli
     public void getBooks(String query)
     {
         search.clearFocus();
-        fragment.getBooks(query);
+        mHomefragment.getBooks(query);
+    }
+
+    @Override
+    public void bookSelected(BookItem bookItem)
+    {
+        int detailId = R.id.detail_container;
+        BookDetailFragment bookDetailFragment = BookDetailFragment.getInstance(bookItem);
+        fragmentManager.beginTransaction().replace(detailId, bookDetailFragment).commit();
+        new BookDetailPresenter(bookDetailFragment, Inject.provideBooksRepository(this));
     }
 }

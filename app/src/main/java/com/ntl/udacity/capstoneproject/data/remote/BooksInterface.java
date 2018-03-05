@@ -2,7 +2,7 @@ package com.ntl.udacity.capstoneproject.data.remote;
 
 import com.ntl.udacity.capstoneproject.data.model.AccessToken;
 import com.ntl.udacity.capstoneproject.data.model.BookShelfResponse;
-import com.ntl.udacity.capstoneproject.data.model.SearchResponse;
+import com.ntl.udacity.capstoneproject.data.model.KindBooksVolume;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -35,7 +35,7 @@ public interface BooksInterface
 
 
     @GET("books/v1/volumes")
-    Call<SearchResponse> searchVolumes(
+    Call<KindBooksVolume> searchVolumes(
             @Query("q") String searchQuery);
 
     @GET("books/v1/volumes")
@@ -46,16 +46,16 @@ public interface BooksInterface
     Call<BookShelfResponse> getUserBookshelves();
 
     @GET("books/v1/mylibrary/bookshelves/{shelf}/volumes")
-    Call<AccessToken> getlistOfVolumesFromBookshelf(@Path("shelf") String shelfId);
+    Call<KindBooksVolume> getlistOfVolumesFromBookshelf(@Path("shelf") String shelfId);
 
     @POST("books/v1/mylibrary/bookshelves/{shelf}/addVolume")
-    Call<AddVolumeToBookshelfResponse> addVolumeToBookshelf(@Path("shelf") String shelfId, @Query("volumeId") String volumeId);
+    Call<EmptyResponse> addVolumeToBookshelf(@Path("shelf") String shelfId, @Query("volumeId") String volumeId);
 
     @POST("books/v1/mylibrary/bookshelves/{shelf}/removeVolume")
-    Call<AccessToken> removeVolumeFromBookshelf(@Path("shelf") String shelfId, @Query("volumeId") String volumeId);
+    Call<EmptyResponse> removeVolumeFromBookshelf(@Path("shelf") String shelfId, @Query("volumeId") String volumeId);
 
     @POST("books/v1/mylibrary/bookshelves/{shelf}/clearVolumes")
-    Call<AccessToken> clearVolumesFromBookshelf(@Path("shelf") String shelfId);
+    Call<EmptyResponse> clearVolumesFromBookshelf(@Path("shelf") String shelfId);
 
 
 }

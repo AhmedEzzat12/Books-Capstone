@@ -2,6 +2,8 @@ package com.ntl.udacity.capstoneproject.bookDetail;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,7 +15,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.common.base.MoreObjects;
 import com.ntl.udacity.capstoneproject.R;
 import com.ntl.udacity.capstoneproject.data.model.BookItem;
@@ -45,9 +50,10 @@ public class BookDetailFragment extends Fragment implements BookDetailContract.V
     TextView openBookPage_btn;
     @BindView(R.id.imageView_bookDetail)
     ImageView bookThumbnail_iv;
-
     @BindView(R.id.ratingBar)
     RatingBar ratingBar;
+    @BindView(R.id.adView)
+    AdView mAdView;
 
     private BookItem mBookItem;
     private BookDetailContract.Presenter mBookDetailPresenter;
@@ -81,6 +87,8 @@ public class BookDetailFragment extends Fragment implements BookDetailContract.V
     {
         View view = inflater.inflate(R.layout.fragment_book_detail, container, false);
         unbinder = ButterKnife.bind(this, view);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         return view;
     }
@@ -134,13 +142,56 @@ public class BookDetailFragment extends Fragment implements BookDetailContract.V
         }
     }
 
+    @OnClick(R.id.button_bookDetail_addToFav)
+    @Override
+    public void addBookToFavourite()
+    {
+        Bitmap bitmap = ((BitmapDrawable) bookThumbnail_iv.getDrawable()).getBitmap();
+        mBookDetailPresenter.addBookToFavourite(mBookItem, bitmap, getActivity());
+    }
+
+    @OnClick(R.id.button_bookDetail_removeFromFav)
+    @Override
+    public void removeBookFromFavourite()
+    {
+        mBookDetailPresenter.removeBookFromFavourite(mBookItem.getId(), getActivity());
+    }
+
 
     @OnClick(R.id.button_bookDetail_add)
+    @Override
     public void chooseBookshelf()
     {
         ChooseBookshelfDialog chooseBookshelfFragment = ChooseBookshelfDialog.getInstance(mBookItem);
         chooseBookshelfFragment.setCancelable(false);
         chooseBookshelfFragment.show(getActivity().getSupportFragmentManager(), "add_to_bookshelf");
+    }
+
+    @Override
+    public void onBookAddedToFavourite(Uri uri)
+    {
+        Toast.makeText(getActivity(), uri.toString(), Toast.LENGTH_SHORT).show();
+        //UpdateWidgetData.startActionUpdateData(getActivity());
+    }
+
+    @Override
+    public void onBookFailAddToFavourite()
+    {
+        Toast.makeText(getActivity(), "you've inserted this movie before", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onBookRemovedFromFavourite()
+    {
+        Toast.makeText(getActivity(), "movie has been successfully deleted", Toast.LENGTH_LONG).show();
+
+    }
+
+    @Override
+    public void onFailRemoveFromFavourite()
+    {
+        Toast.makeText(getActivity(), "can't do this operation", Toast.LENGTH_LONG).show();
+
     }
 
     @OnClick(R.id.button_bookDetail_openPage)

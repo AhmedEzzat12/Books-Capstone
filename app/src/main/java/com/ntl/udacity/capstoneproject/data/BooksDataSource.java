@@ -15,9 +15,15 @@ public interface BooksDataSource
 
     void getUserbookshelves(UserBookshelvesCallback callback);
 
+    void getUserbookshelfContent(GetBookshelfContents callback, String bookshelfId);
+
+    void removeBookFromBookshelf(RemoveBookFromBookshelfCallBack callback, String bookshelfId, String bookId);
+
+    void clearBookshelf(ClearBookshelfCallback callback, String bookshelfId);
+
     interface ErrorHandling
     {
-        void onThereIsError();
+        void onThereIsError(Throwable t);
     }
 
     interface UserBookshelvesCallback extends ErrorHandling
@@ -36,8 +42,23 @@ public interface BooksDataSource
     {
 
         void onBooksListLoaded(List<BookItem> bookItemsList);
-
     }
 
+
+    interface GetBookshelfContents extends ErrorHandling
+    {
+
+        void onBooksListLoaded(List<BookItem> bookItemsList);
+    }
+
+    interface RemoveBookFromBookshelfCallBack extends ErrorHandling
+    {
+        void onBookIsRemoved();
+    }
+
+    interface ClearBookshelfCallback extends ErrorHandling
+    {
+        void onBookshelfCleared();
+    }
 
 }

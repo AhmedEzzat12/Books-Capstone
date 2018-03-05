@@ -37,7 +37,7 @@ public class MyLibraryPresenter implements MyLibraryContract.Presenter
             }
 
             @Override
-            public void onThereIsError()
+            public void onThereIsError(Throwable t)
             {
 
             }

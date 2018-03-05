@@ -1,5 +1,6 @@
 package com.ntl.udacity.capstoneproject.myLibrary.plus;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,7 @@ import android.widget.TextView;
 
 import com.ntl.udacity.capstoneproject.R;
 import com.ntl.udacity.capstoneproject.data.model.BookShelfItem;
-import com.ntl.udacity.capstoneproject.myLibrary.MylibraryFragment;
+import com.ntl.udacity.capstoneproject.myLibrary.MyLibraryContract;
 
 import java.util.List;
 
@@ -19,9 +20,9 @@ public class MyLibraryAdapter extends RecyclerView.Adapter<MyLibraryAdapter.View
 {
 
     private List<BookShelfItem> mBookShelfItemList;
-    private MylibraryFragment mMylibraryFragment;
+    private MyLibraryContract.View mMylibraryFragment;
 
-    public MyLibraryAdapter(List<BookShelfItem> mBookShelfItemList, MylibraryFragment mMylibraryFragment)
+    public MyLibraryAdapter(List<BookShelfItem> mBookShelfItemList, MyLibraryContract.View mMylibraryFragment)
     {
         this.mBookShelfItemList = mBookShelfItemList;
         this.mMylibraryFragment = mMylibraryFragment;
@@ -33,6 +34,7 @@ public class MyLibraryAdapter extends RecyclerView.Adapter<MyLibraryAdapter.View
         notifyDataSetChanged();
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {

@@ -6,31 +6,30 @@ import android.os.Parcelable;
 import java.util.List;
 
 
-public class SearchResponse implements Parcelable
+public class KindBooksVolume implements Parcelable
 {
+    public static final Creator<KindBooksVolume> CREATOR = new Creator<KindBooksVolume>()
+    {
+        @Override
+        public KindBooksVolume createFromParcel(Parcel in)
+        {
+            return new KindBooksVolume(in);
+        }
+
+        @Override
+        public KindBooksVolume[] newArray(int size)
+        {
+            return new KindBooksVolume[size];
+        }
+    };
     private String kind;
     private List<BookItem> items;
 
-    protected SearchResponse(Parcel in)
+    protected KindBooksVolume(Parcel in)
     {
         kind = in.readString();
         items = in.createTypedArrayList(BookItem.CREATOR);
     }
-
-    public static final Creator<SearchResponse> CREATOR = new Creator<SearchResponse>()
-    {
-        @Override
-        public SearchResponse createFromParcel(Parcel in)
-        {
-            return new SearchResponse(in);
-        }
-
-        @Override
-        public SearchResponse[] newArray(int size)
-        {
-            return new SearchResponse[size];
-        }
-    };
 
     public List<BookItem> getItems()
     {

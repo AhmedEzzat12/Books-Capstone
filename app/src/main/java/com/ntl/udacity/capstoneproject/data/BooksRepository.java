@@ -2,8 +2,6 @@ package com.ntl.udacity.capstoneproject.data;
 
 import android.support.annotation.NonNull;
 
-import com.ntl.udacity.capstoneproject.data.local.SharedPrefHelper;
-
 import static com.google.common.base.Preconditions.checkNotNull;
 
 
@@ -13,20 +11,17 @@ public class BooksRepository implements BooksDataSource
     private static BooksRepository INSTANCE = null;
 
     private final BooksDataSource mBooksDataSource;
-    private final SharedPrefHelper mSharedPrefHelper;
 
-    // Prevent direct instantiation.
-    private BooksRepository(@NonNull BooksDataSource booksDataSource, SharedPrefHelper sharedPrefHelper)
+    private BooksRepository(@NonNull BooksDataSource booksDataSource)
     {
         mBooksDataSource = checkNotNull(booksDataSource);
-        mSharedPrefHelper = checkNotNull(sharedPrefHelper);
     }
 
-    public static BooksRepository getInstance(BooksDataSource booksRemoteDataSource, SharedPrefHelper sharedPrefHelper)
+    public static BooksRepository getInstance(BooksDataSource booksRemoteDataSource)
     {
         if (INSTANCE == null)
         {
-            INSTANCE = new BooksRepository(booksRemoteDataSource, sharedPrefHelper);
+            INSTANCE = new BooksRepository(booksRemoteDataSource);
         }
         return INSTANCE;
     }
@@ -53,5 +48,25 @@ public class BooksRepository implements BooksDataSource
     {
         mBooksDataSource.getUserbookshelves(callback);
     }
+
+    @Override
+    public void getUserbookshelfContent(GetBookshelfContents callback, String bookshelfId)
+    {
+        mBooksDataSource.getUserbookshelfContent(callback, bookshelfId);
+
+    }
+
+    @Override
+    public void removeBookFromBookshelf(RemoveBookFromBookshelfCallBack callback, String bookshelfId, String bookId)
+    {
+        mBooksDataSource.removeBookFromBookshelf(callback, bookshelfId, bookId);
+    }
+
+    @Override
+    public void clearBookshelf(ClearBookshelfCallback callback, String bookshelfId)
+    {
+        mBooksDataSource.clearBookshelf(callback, bookshelfId);
+    }
+
 
 }

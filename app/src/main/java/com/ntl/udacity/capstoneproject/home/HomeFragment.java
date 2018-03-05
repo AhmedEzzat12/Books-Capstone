@@ -34,14 +34,26 @@ public class HomeFragment extends Fragment implements HomeContract.View
     RecyclerViewWithEmpty mRecyclerView;
     @BindView(R.id.textview_home_emptyview)
     TextView mEmptyView;
+
     private List<BookItem> mBookItemList;
     private HomeContract.Presenter mHomePresenter;
     private HomeAdapter mHomeAdapter;
     private Unbinder unbinder;
+    private boolean twoPane;
+    private OnBookIsSelected mOnBookIsSelected;
 
-    public static HomeFragment getInstance()
+    public static HomeFragment getInstance(boolean twoPane)
     {
-        return new HomeFragment();
+        HomeFragment homeFragment = new HomeFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(HomeActivity.TWOPANE, twoPane);
+        homeFragment.setArguments(bundle);
+        return homeFragment;
+    }
+
+    public void setmOnBookIsSelected(OnBookIsSelected mOnBookIsSelected)
+    {
+        this.mOnBookIsSelected = mOnBookIsSelected;
     }
 
     @Override
@@ -51,6 +63,11 @@ public class HomeFragment extends Fragment implements HomeContract.View
         setHasOptionsMenu(true);
         setRetainInstance(true);
         Timber.d("ondCreate has been called");
+        Bundle arguments = getArguments();
+        if (arguments != null)
+        {
+            this.twoPane = arguments.getBoolean(HomeActivity.TWOPANE);
+        }
     }
 
     @Override
@@ -65,6 +82,7 @@ public class HomeFragment extends Fragment implements HomeContract.View
         mRecyclerView.setAdapter(mHomeAdapter);
         mRecyclerView.setEmptyView(mEmptyView);
         mHomeAdapter.setHandleClick(this);
+
         return v;
     }
 
@@ -81,8 +99,6 @@ public class HomeFragment extends Fragment implements HomeContract.View
     {
         mHomePresenter = presenter;
     }
-
-
 
 
     @Override
@@ -104,11 +120,17 @@ public class HomeFragment extends Fragment implements HomeContract.View
     @Override
     public void onBookClick(int adapterPosition)
     {
-        Intent intent = new Intent(getActivity(), BookDetailActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(BookDetailActivity.BOOK, mBookItemList.get(adapterPosition));
-        intent.putExtra(BookDetailActivity.BOOK_BUNDLE, bundle);
-        getActivity().startActivity(intent);
+        if (twoPane)
+        {
+            mOnBookIsSelected.bookSelected(mBookItemList.get(adapterPosition));
+        } else
+        {
+            Intent intent = new Intent(getActivity(), BookDetailActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(BookDetailActivity.BOOK, mBookItemList.get(adapterPosition));
+            intent.putExtra(BookDetailActivity.BOOK_BUNDLE, bundle);
+            getActivity().startActivity(intent);
+        }
     }
 
     public void getBooks(String query)

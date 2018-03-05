@@ -51,19 +51,25 @@ public class MylibraryFragment extends Fragment implements MyLibraryContract.Vie
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
+        //setRetainInstance(true);
         Timber.d("ondCreate has been called");
 
+    }
+
+    @Override
+    public void onResume()
+    {
+        Timber.d("onResume has been called");
+        mPresenter.loodBookshelves();
+        super.onResume();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-
         View view = inflater.inflate(R.layout.fragment_mylibrary, container, false);
         unbinder = ButterKnife.bind(this, view);
-        mPresenter.loodBookshelves();
         mMyLibraryAdapter = new MyLibraryAdapter(mBookshelfItems, this);
         mRecyclerView.setAdapter(mMyLibraryAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
