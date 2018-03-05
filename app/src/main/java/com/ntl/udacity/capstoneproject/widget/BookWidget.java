@@ -10,9 +10,6 @@ import android.widget.RemoteViews;
 import com.ntl.udacity.capstoneproject.R;
 import com.ntl.udacity.capstoneproject.login.SplashScreenActivity;
 
-/**
- * Implementation of App Widget functionality.
- */
 public class BookWidget extends AppWidgetProvider
 {
 

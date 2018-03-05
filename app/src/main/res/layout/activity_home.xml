@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:drawableStart="@android:drawable/ic_menu_search"
-                android:hint="Search books"
+                android:hint="@string/search_books"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:lines="1"

@@ -31,6 +31,6 @@
         android:id="@+id/textview_mylibrary_emptyview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="there are no bookshelves in your library yet"
+        android:text="@string/there_are_no_bookshelves_in_your_library_yet"
         android:visibility="gone" />
 </LinearLayout>

@@ -26,7 +26,7 @@ public class Utility
     private static final String JOB_TAG = "update_data_tag";
     private static boolean sInitialized;
 
-    static boolean isNetworkAvailable(Context ctx)
+    public static boolean isNetworkAvailable(Context ctx)
     {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);

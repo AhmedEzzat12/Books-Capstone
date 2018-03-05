@@ -23,6 +23,7 @@
                 android:id="@+id/imageView_bookDetail"
                 android:layout_width="140dp"
                 android:layout_height="190dp"
+                android:contentDescription="@string/book_image"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/ic_launcher" />
 
@@ -37,7 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="2"
-                    android:text="Title" />
+                    android:text="@string/title" />
 
                 <TextView
                     android:id="@+id/textView_bookDetail_author"
@@ -45,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:maxLines="2"
-                    android:text="Author" />
+                    android:text="@string/author" />
 
                 <RatingBar
                     android:id="@+id/ratingBar"
@@ -63,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="37dp"
                     android:layout_gravity="center_horizontal"
-                    android:text="Add to bookshelf"
+                    android:text="@string/add_to_bookshelf"
                     android:textAllCaps="false"
                     android:textSize="12sp" />
 
@@ -72,14 +73,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="37dp"
                     android:layout_gravity="center_horizontal"
-                    android:text="visit" />
+                    android:text="@string/visit" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="4dp"
-                    android:text="Favourite" />
+                    android:text="@string/favourite" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -94,7 +95,7 @@
                         android:layout_width="0dp"
                         android:layout_height="37dp"
                         android:layout_weight="1"
-                        android:text="Remove"
+                        android:text="@string/remove"
                         android:textSize="12sp" />
 
                     <Button
@@ -102,7 +103,7 @@
                         android:layout_width="0dp"
                         android:layout_height="37dp"
                         android:layout_weight="1"
-                        android:text="Add"
+                        android:text="@string/add"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -123,13 +124,13 @@
                 android:id="@+id/textView_bookDetail_publisher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Publisher" />
+                android:text="@string/publisher" />
 
             <TextView
                 android:id="@+id/textView_bookDetail_publishDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pblish Date" />
+                android:text="@string/pblish_date" />
 
         </LinearLayout>
 
@@ -147,7 +148,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="4dp"
-            android:text="Description"
+            android:text="@string/description"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
@@ -156,7 +157,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="4dp"
             android:gravity="center|top"
-            android:text="TextView" />
+            android:text="@string/textview" />
 
     </LinearLayout>
 

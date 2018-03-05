@@ -21,7 +21,8 @@
         card_view:cardElevation="4dp"
         card_view:cardMaxElevation="8dp"
         card_view:cardPreventCornerOverlap="false"
-        card_view:cardUseCompatPadding="true">
+        card_view:cardUseCompatPadding="true"
+        tools:targetApi="lollipop">
 
         <TextView
             android:id="@+id/textView_mylibrary_bookshelf_title"
@@ -29,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top|center"
             android:layout_marginTop="40dp"
-            android:text="Hello Card"
+            android:text="@string/hello_card"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
         <LinearLayout
@@ -42,7 +43,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Number of books in this shelf" />
+                android:text="@string/number_of_books_in_this_shelf" />
 
             <TextView
                 android:id="@+id/textView_mylibrary_bookshelf_numofvol"

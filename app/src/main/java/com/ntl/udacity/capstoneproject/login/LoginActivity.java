@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.ntl.udacity.capstoneproject.R;
 import com.ntl.udacity.capstoneproject.home.HomeActivity;
 import com.ntl.udacity.capstoneproject.util.Inject;
+import com.ntl.udacity.capstoneproject.util.Utility;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -97,18 +99,25 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     public void showErrorDialog()
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("failed");
-        builder.setMessage("something happend during your login process please try again");
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener()
+        if (Utility.isNetworkAvailable(this))
         {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
+            Toast.makeText(this, "please connect to internet", Toast.LENGTH_LONG).show();
+        } else
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("failed");
+            builder.setMessage("something happend during your login process please try again");
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener()
             {
-                loginToAuthorize();
-            }
-        });
-        builder.show();
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    loginToAuthorize();
+                }
+            });
+            builder.show();
+
+        }
 
     }
 }

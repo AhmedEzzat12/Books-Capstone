@@ -8,7 +8,6 @@ import android.widget.RemoteViewsService;
 
 import com.ntl.udacity.capstoneproject.data.local.contentprovider.BookContract;
 
-
 public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory
 {
     private Context mContext;

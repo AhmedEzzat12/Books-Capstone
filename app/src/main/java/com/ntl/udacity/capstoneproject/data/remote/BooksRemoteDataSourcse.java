@@ -1,5 +1,6 @@
 package com.ntl.udacity.capstoneproject.data.remote;
 
+import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
@@ -8,6 +9,7 @@ import com.ntl.udacity.capstoneproject.data.local.SharedPrefHelper;
 import com.ntl.udacity.capstoneproject.data.model.AccessToken;
 import com.ntl.udacity.capstoneproject.data.model.BookShelfResponse;
 import com.ntl.udacity.capstoneproject.data.model.KindBooksVolume;
+import com.ntl.udacity.capstoneproject.util.Utility;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,6 +44,11 @@ public class BooksRemoteDataSourcse implements BooksDataSource
     @Override
     public void getAccesstoken(final GetAccesstokenCallback callback, String code, String clientId, String redirectUri, String grantType)
     {
+        if (!Utility.isNetworkAvailable(mContext))
+        {
+            callback.onThereIsError(new NetworkErrorException("Please connect to internet"));
+            return;
+        }
         Call<AccessToken> requestAccessToken = mBooksInterface.requestAccessToken(code, clientId, redirectUri, grantType);
         requestAccessToken.enqueue(new Callback<AccessToken>()
         {
@@ -69,6 +76,12 @@ public class BooksRemoteDataSourcse implements BooksDataSource
     @Override
     public void searchSpecificBook(final GetSearchBookCallback callback, String query)
     {
+        if (!Utility.isNetworkAvailable(mContext))
+        {
+            callback.onThereIsError(new NetworkErrorException("Please connect to internet"));
+            return;
+        }
+
         Call<KindBooksVolume> requestBooks = mBooksInterface.searchVolumes(query);
         requestBooks.enqueue(new Callback<KindBooksVolume>()
         {
@@ -101,7 +114,12 @@ public class BooksRemoteDataSourcse implements BooksDataSource
     @Override
     public void getUserbookshelves(final UserBookshelvesCallback callback)
     {
-        //TODO handle Offline aka Contentprovider
+        if (!Utility.isNetworkAvailable(mContext))
+        {
+            callback.onThereIsError(new NetworkErrorException("Please connect to internet"));
+            return;
+        }
+
         Call<BookShelfResponse> bookShelfResponseCall = mBooksInterface.getUserBookshelves();
         bookShelfResponseCall.enqueue(new Callback<BookShelfResponse>()
         {
@@ -126,6 +144,12 @@ public class BooksRemoteDataSourcse implements BooksDataSource
     @Override
     public void getUserbookshelfContent(final GetBookshelfContents callback, String bookshelfId)
     {
+        if (!Utility.isNetworkAvailable(mContext))
+        {
+            callback.onThereIsError(new NetworkErrorException("Please connect to internet"));
+            return;
+        }
+
         Call<KindBooksVolume> booksVolumeCall = mBooksInterface.getlistOfVolumesFromBookshelf(bookshelfId);
         booksVolumeCall.enqueue(new Callback<KindBooksVolume>()
         {
@@ -152,6 +176,12 @@ public class BooksRemoteDataSourcse implements BooksDataSource
     @Override
     public void removeBookFromBookshelf(final RemoveBookFromBookshelfCallBack callback, String bookshelfId, String bookId)
     {
+        if (!Utility.isNetworkAvailable(mContext))
+        {
+            callback.onThereIsError(new NetworkErrorException("Please connect to internet"));
+            return;
+        }
+
         Call<EmptyResponse> booksVolumeCall = mBooksInterface.removeVolumeFromBookshelf(bookshelfId, bookId);
         booksVolumeCall.enqueue(new Callback<EmptyResponse>()
         {
@@ -178,6 +208,12 @@ public class BooksRemoteDataSourcse implements BooksDataSource
     @Override
     public void clearBookshelf(final ClearBookshelfCallback callback, String bookshelfId)
     {
+        if (!Utility.isNetworkAvailable(mContext))
+        {
+            callback.onThereIsError(new NetworkErrorException("Please connect to internet"));
+            return;
+        }
+
         Call<EmptyResponse> booksVolumeCall = mBooksInterface.clearVolumesFromBookshelf(bookshelfId);
         booksVolumeCall.enqueue(new Callback<EmptyResponse>()
         {
