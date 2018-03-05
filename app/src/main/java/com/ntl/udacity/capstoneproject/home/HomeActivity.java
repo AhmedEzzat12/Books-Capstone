@@ -12,6 +12,7 @@ import android.widget.EditText;
 import com.ntl.udacity.capstoneproject.R;
 import com.ntl.udacity.capstoneproject.bookDetail.BookDetailFragment;
 import com.ntl.udacity.capstoneproject.bookDetail.BookDetailPresenter;
+import com.ntl.udacity.capstoneproject.data.local.SharedPrefHelper;
 import com.ntl.udacity.capstoneproject.data.model.BookItem;
 import com.ntl.udacity.capstoneproject.home.plus.EditorActionOnClick;
 import com.ntl.udacity.capstoneproject.home.plus.OnEditorActionListenerDone;
@@ -95,6 +96,8 @@ public class HomeActivity extends AppCompatActivity implements EditorActionOnCli
                 return true;
             case R.id.logout:
                 //TODO handle logout
+                SharedPrefHelper.getInstance(this).setSharedPreferenceRefreshAccesstoken("");
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

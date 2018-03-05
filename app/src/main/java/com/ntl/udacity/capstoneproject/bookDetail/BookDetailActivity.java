@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.ntl.udacity.capstoneproject.R;
+import com.ntl.udacity.capstoneproject.data.local.SharedPrefHelper;
 import com.ntl.udacity.capstoneproject.data.model.BookItem;
 import com.ntl.udacity.capstoneproject.myLibrary.MyLibraryActivity;
 import com.ntl.udacity.capstoneproject.util.Inject;
@@ -72,6 +73,8 @@ public class BookDetailActivity extends AppCompatActivity
                 return true;
             case R.id.logout:
                 //TODO handle logout
+                SharedPrefHelper.getInstance(this).setSharedPreferenceRefreshAccesstoken("");
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
