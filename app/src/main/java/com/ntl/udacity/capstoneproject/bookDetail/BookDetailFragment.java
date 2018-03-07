@@ -164,7 +164,7 @@ public class BookDetailFragment extends Fragment implements BookDetailContract.V
     {
         ChooseBookshelfDialog chooseBookshelfFragment = ChooseBookshelfDialog.getInstance(mBookItem);
         chooseBookshelfFragment.setCancelable(false);
-        chooseBookshelfFragment.show(getActivity().getSupportFragmentManager(), "add_to_bookshelf");
+        chooseBookshelfFragment.show(getActivity().getSupportFragmentManager(), getString(R.string.add_to_bookshelf_tag));
     }
 
     @Override

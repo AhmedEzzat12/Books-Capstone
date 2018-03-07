@@ -22,7 +22,7 @@ public class MyLibraryActivity extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.mylibrary_toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("My Library");
+        toolbar.setTitle(R.string.my_library);
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         MylibraryFragment mylibraryFragment = (MylibraryFragment) fragmentManager.findFragmentById(R.id.contentFrame);

@@ -112,8 +112,8 @@ public class HomeFragment extends Fragment implements HomeContract.View
     public void cantLoadBooks()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Invalid book name");
-        builder.setMessage("please try a valid bookname");
+        builder.setTitle(R.string.invalid_book_name);
+        builder.setMessage(R.string.please_try_valid_book_name);
         builder.show();
     }
 

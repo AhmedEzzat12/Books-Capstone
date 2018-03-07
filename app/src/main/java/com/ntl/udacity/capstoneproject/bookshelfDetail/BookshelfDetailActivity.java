@@ -26,7 +26,7 @@ public class BookshelfDetailActivity extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.bookshelfDetail_toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("Contents");
+        toolbar.setTitle(R.string.contents);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         FragmentManager fragmentManager = getSupportFragmentManager();
 

@@ -105,9 +105,9 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         } else
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("failed");
-            builder.setMessage("something happend during your login process please try again");
-            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener()
+            builder.setTitle(R.string.failed);
+            builder.setMessage(R.string.something_happened_during_login);
+            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
             {
                 @Override
                 public void onClick(DialogInterface dialog, int which)

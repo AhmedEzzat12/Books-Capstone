@@ -41,4 +41,12 @@
     <string name="success_book_added">\"book has been added successfully \"</string>
     <string name="fail_add_to_bookshelf">can\'t add book to this bookshelf</string>
     <string name="fail_internet">please connect to internet</string>
+    <string name="invalid_book_name">Invalid book name</string>
+    <string name="please_try_valid_book_name">please try a valid book name</string>
+    <string name="failed">failed</string>
+    <string name="something_happened_during_login">something happend during your login process please try again</string>
+    <string name="ok">Ok</string>
+    <string name="my_library">My Library</string>
+    <string name="add_to_bookshelf_tag">add_to_bookshelf</string>
+    <string name="contents">Contents</string>
 </resources>
