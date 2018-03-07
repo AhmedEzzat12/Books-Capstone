@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     {
         if (Utility.isNetworkAvailable(this))
         {
-            Toast.makeText(this, "please connect to internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.fail_internet, Toast.LENGTH_LONG).show();
         } else
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

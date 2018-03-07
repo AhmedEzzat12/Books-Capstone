@@ -4,6 +4,7 @@ import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.ntl.udacity.capstoneproject.data.BooksDataSource;
 import com.ntl.udacity.capstoneproject.data.local.SharedPrefHelper;
 import com.ntl.udacity.capstoneproject.data.model.AccessToken;
@@ -68,6 +69,8 @@ public class BooksRemoteDataSourcse implements BooksDataSource
             {
                 Timber.e(t);
                 callback.onThereIsError(t);
+                FirebaseCrash.report(t);
+
             }
         });
 
@@ -98,6 +101,8 @@ public class BooksRemoteDataSourcse implements BooksDataSource
                     callback.onThereIsError(e);
                     Timber.e(e);
                     Timber.e("response code is %s", response.code());
+                    FirebaseCrash.report(e);
+
                 }
 
             }
@@ -137,6 +142,8 @@ public class BooksRemoteDataSourcse implements BooksDataSource
             {
                 Timber.e(t);
                 callback.onThereIsError(t);
+                FirebaseCrash.report(t);
+
             }
         });
     }
@@ -168,6 +175,8 @@ public class BooksRemoteDataSourcse implements BooksDataSource
             {
                 Timber.e(t);
                 callback.onThereIsError(t);
+                FirebaseCrash.report(t);
+
             }
         });
 
@@ -199,6 +208,8 @@ public class BooksRemoteDataSourcse implements BooksDataSource
             {
                 Timber.e(t);
                 callback.onThereIsError(t);
+                FirebaseCrash.report(t);
+
 
             }
         });
@@ -229,6 +240,8 @@ public class BooksRemoteDataSourcse implements BooksDataSource
             public void onFailure(Call<EmptyResponse> call, Throwable t)
             {
                 callback.onThereIsError(t);
+                FirebaseCrash.report(t);
+
             }
         });
 

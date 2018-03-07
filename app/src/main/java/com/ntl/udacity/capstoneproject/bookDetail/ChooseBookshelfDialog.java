@@ -175,11 +175,11 @@ public class ChooseBookshelfDialog extends DialogFragment
                 if (response.code() == 204)
                 {
                     Timber.d(response.message());
-                    Toast.makeText(getContext(), "book has been added successfully ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.success_book_added, Toast.LENGTH_SHORT).show();
                     dismiss();
                 } else if (response.code() == 403)
                 {
-                    Toast.makeText(getContext(), "can't add book to this bookshelf", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.fail_add_to_bookshelf, Toast.LENGTH_SHORT).show();
                     dismiss();
                 }
             }

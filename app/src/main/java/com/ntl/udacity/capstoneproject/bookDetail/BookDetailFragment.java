@@ -177,20 +177,20 @@ public class BookDetailFragment extends Fragment implements BookDetailContract.V
     @Override
     public void onBookFailAddToFavourite()
     {
-        Toast.makeText(getActivity(), "you've inserted this movie before", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), R.string.book_failed_add_to_fav, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onBookRemovedFromFavourite()
     {
-        Toast.makeText(getActivity(), "movie has been successfully deleted", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), R.string.success_book_removed, Toast.LENGTH_LONG).show();
 
     }
 
     @Override
     public void onFailRemoveFromFavourite()
     {
-        Toast.makeText(getActivity(), "can't do this operation", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), R.string.fail_book_remove, Toast.LENGTH_LONG).show();
 
     }
 

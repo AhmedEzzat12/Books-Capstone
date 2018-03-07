@@ -4,9 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
-import com.crashlytics.android.Crashlytics;
-
-import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 public class CustomApplication extends Application
@@ -15,7 +12,6 @@ public class CustomApplication extends Application
     public void onCreate()
     {
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
 
         if (BuildConfig.DEBUG)
         {

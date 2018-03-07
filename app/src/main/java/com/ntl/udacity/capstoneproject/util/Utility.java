@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Utility
 {
-    private static final int INTERVAL_SECONDS = (int) (TimeUnit.MINUTES.toSeconds(2));
+    private static final int INTERVAL_SECONDS = (int) (TimeUnit.MINUTES.toSeconds(1));
     private static final int SYNC_SECONDS = INTERVAL_SECONDS;
     private static final String JOB_TAG = "update_data_tag";
     private static boolean sInitialized;

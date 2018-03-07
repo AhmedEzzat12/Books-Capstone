@@ -31,14 +31,14 @@ public class SplashScreenActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         String refreshAccesstoken = SharedPrefHelper.getInstance(this).getSharedPreferenceRefreshAccesstoken();
-        Timber.d("refresh accesstoken %s",refreshAccesstoken);
-        if (!TextUtils.isEmpty(refreshAccesstoken))
-        {
-            if (Utility.isNetworkAvailable(this))
-            {
+        Timber.d("refresh accesstoken %s", refreshAccesstoken);
 
+        if (Utility.isNetworkAvailable(this))
+        {
+            if (!TextUtils.isEmpty(refreshAccesstoken))
+            {
                 BooksInterface booksInterface = BooksClient.getClient(this);
-                final Call<AccessToken> accessToken = booksInterface.refreshAccessToken(refreshAccesstoken,CLIENT_ID, GRANT_TYPE_AUTHORIZATION_CODE);
+                final Call<AccessToken> accessToken = booksInterface.refreshAccessToken(refreshAccesstoken, CLIENT_ID, GRANT_TYPE_AUTHORIZATION_CODE);
                 accessToken.enqueue(new Callback<AccessToken>()
                 {
                     @Override
@@ -66,7 +66,7 @@ public class SplashScreenActivity extends AppCompatActivity
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
         } else
         {
-            Toast.makeText(this, "please connect to internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.fail_internet, Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -2,8 +2,6 @@ package com.ntl.udacity.capstoneproject.data.remote;
 
 import android.content.Context;
 
-import com.ntl.udacity.capstoneproject.data.local.SharedPrefHelper;
-
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -19,9 +17,7 @@ public class BooksClient
         if (retrofit == null)
         {
             OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
-            okHttpClient.addInterceptor(new BooksInterceptor(SharedPrefHelper
-                    .getInstance(context)
-                    .getSharedPreferenceAccesstoken()));
+            okHttpClient.addInterceptor(new BooksInterceptor(context));
             okHttpClient.authenticator(new BooksAuthinticator(context));
 
             retrofit = new Retrofit.Builder()

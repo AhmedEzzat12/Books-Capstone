@@ -34,4 +34,11 @@
     <string name="remove">Remove</string>
     <string name="hello_card">Hello Card</string>
     <string name="number_of_books_in_this_shelf">Number of books in this shelf</string>
+    <string name="book_failed_add_to_fav">you\'ve inserted this movie before</string>
+    <string name="success_book_removed">movie has been successfully deleted</string>
+    <string name="fail_book_remove">can\'t do this operation</string>
+    <string name="bookshelf_cleared">bookshelf cleared successfully</string>
+    <string name="success_book_added">\"book has been added successfully \"</string>
+    <string name="fail_add_to_bookshelf">can\'t add book to this bookshelf</string>
+    <string name="fail_internet">please connect to internet</string>
 </resources>

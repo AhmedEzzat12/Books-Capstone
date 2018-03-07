@@ -108,7 +108,7 @@ public class BookshelfDetailFragment extends Fragment implements BookshelfDetail
     @Override
     public void onBookRemoved()
     {
-        Toast.makeText(getActivity(), "Book has been removed successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), R.string.success_book_removed, Toast.LENGTH_SHORT).show();
         progressBar.setVisibility(View.VISIBLE);
         mPresenter.getBooks(String.valueOf(bookshelfId));
     }
@@ -148,7 +148,7 @@ public class BookshelfDetailFragment extends Fragment implements BookshelfDetail
     @Override
     public void onBookshelfCleared()
     {
-        Toast.makeText(getActivity(), "bookshelf cleared successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), R.string.bookshelf_cleared, Toast.LENGTH_SHORT).show();
     }
 
 
